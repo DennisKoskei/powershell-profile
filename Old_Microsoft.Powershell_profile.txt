@@ -1,0 +1,80 @@
+# Useful shortcut for traversing directories
+function cd... { cd ..\.. }
+function cd.... { cd ..\..\..\ }
+
+# Shortcuts to go to specific directories
+function down { cd C:\Users\Denice\Downloads }
+function docs {cd C:\Users\Denice\Documents }
+function cdc { cd C:\ }
+function obs { cd "C:\Users\Denice\My Drive (denniskoskei1738@gmail.com)\Art of Improvement\2. FOLLOW-THE-WHITE-RABBIT"  }
+function cdd { cd D:\ }
+function cddd { cd D:\Denice }
+function cd-git { cd D:\Denice\Github\ }
+function v ($file) { nvim $file }
+function v ($dir) { nvim $dir }
+
+# Import the Chocolatey Profile that contains the necessary code to enable
+# tab-completions to function for `choco`.
+# Be aware that if you are missing these lines from your profile, tab completion
+# for `choco` will not function.
+# See https://ch0.co/tab-completion for details.
+$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+if (Test-Path($ChocolateyProfile)) {
+  Import-Module "$ChocolateyProfile"
+}
+
+# Check for Profile Updates !!! (Ensure you add this section
+
+
+# Editor Configuration
+
+function touch ($file) {"" | Out-File $file -Encoding ASCII }
+# Quick Access to Editing the Profile
+# Network Utilities
+#
+# System Utilities
+#
+# Set UNIX-like aliases for the admn command, so sudo <command> will run the command with elevated rights.
+Set-Alias -Name su -Value admin
+
+function reload-profile {
+	& $profile
+}
+
+function pgrep ($name) {
+	Get-Process $name
+}
+
+
+#
+### Quality of Life Aliases
+
+# Navigation Shortcuts
+# 
+# Simplified Process Management
+#
+# Enhanced Listing
+#
+# Git Shortcuts
+#
+# Quick Access to System Information
+#
+# Networking Utilities
+#
+# Clipboard Utilities
+#
+# Enhanced PowerShell Experience
+# Enhanced PSReadLine Configuration
+#
+# Custom Key handlers
+#
+# Custom Functions for PSReadLine
+#
+# Improved predition settings !!! ( Not sure to use this. Read docs first)
+#
+# Get theme from profile.ps1 or use a default theme
+## Final Line to set prompt
+# 
+# Help Function
+#
+#
