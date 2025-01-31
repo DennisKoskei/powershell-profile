@@ -10,7 +10,7 @@ if ([bool]([System.Security.Principal.WindowsIdentity]::GetCurrent()).IsSystem) 
 }
 
 # Initial GitHub.com connectivity check with 1 second timeout
-#$global:canConnectToGitHub = Test-Connection github.com -Count 1 -Quiet -TimeoutSeconds 1
+$global:canConnectToGitHub = Test-Connection github.com -Count 1 -Quiet -TimeoutSeconds 1
 
 # Import Modules and External Profiles
 # Ensure Terminal-Icons module is installed before importing
@@ -47,12 +47,12 @@ function Update-PowerShell {
     }
 }
 
-# skip in debug mode
-#if (-not $debug) {
-#    Update-PowerShell
-#} else {
-#    Write-Warning "Skipping PowerShell update in debug mode"
-#}
+ #skip in debug mode
+if (-not $debug) {
+    Update-PowerShell
+} else {
+    Write-Warning "Skipping PowerShell update in debug mode"
+}
 
 function Clear-Cache {
     # add clear cache logic here
@@ -79,6 +79,8 @@ function Clear-Cache {
 
 ## Admin Check and Prompt Customization
 $isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+
+# prompt-Appearance
 function prompt {
     if ($isAdmin) { "[" + (Get-Location) + "] # " } else { "[" + (Get-Location) + "] $ " }
 }
@@ -326,9 +328,10 @@ function dtop {
 }
 
 function down { 
-    $down = if ([Environment]::GetFolderPath("Downloads")) {[Environment]::GetFolderPath("Downloads")} else {$HOME + "\Downloads"}
-    Set-Location -Path $down
+    cd "$home/Downloads"
 }
+
+function home { cd $home }
 
 # Simplified Process Management
 function k9 { Stop-Process -Name $args[0] }
@@ -371,13 +374,22 @@ function flushdns {
 function cpy { Set-Clipboard $args[0] }
 function pst { Get-Clipboard }
 
-
-
 # Neovim shortcuts
 
 function v ($file) { nvim $file }
 function v ($dir) { nvim $dir }
 
+# Copy current path to Clipboard
+function pwdc {
+    $path = Get-Location | Select-Object -ExpandProperty Path
+    $path | Set-Clipboard
+    Write-Host "Copied: $path" -ForegroundColor Green
+}
+
 # OTHER FEATURES TO ADD
 #	1. Add a keymap to copy the path of current directory
 #	2. add a keymap to go to my Projects folder
+
+# Use oh-my-posh
+#oh-my-posh init pwsh | Invoke-Expression
+oh-my-posh init pwsh --config "C:\Users\Denice\Documents\PowerShell\custom-posh-profile.json"| Invoke-Expression
