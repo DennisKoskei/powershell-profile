@@ -25,6 +25,12 @@ $global:canConnectToGitHub = Test-Connection github.com -Count 1 -Quiet -Timeout
 
 function Update-PowerShell {
     try {
+        # Check for internet connection
+        if (-not $global:canConnectToGitHub) {
+            Write-Host "No Internet, Try connecting to WiFi" -ForegroundColor Red
+            return  # Exit function early if no internet
+        }
+
         Write-Host "Checking for PowerShell updates..." -ForegroundColor Cyan
         $updateNeeded = $false
         $currentVersion = $PSVersionTable.PSVersion.ToString()
@@ -387,9 +393,7 @@ function pwdc {
 }
 
 # OTHER FEATURES TO ADD
-#	1. Add a keymap to copy the path of current directory
 #	2. add a keymap to go to my Projects folder
 
 # Use oh-my-posh
-#oh-my-posh init pwsh | Invoke-Expression
 oh-my-posh init pwsh --config "C:\Users\Denice\Documents\PowerShell\custom-posh-profile.json"| Invoke-Expression
